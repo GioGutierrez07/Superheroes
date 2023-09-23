@@ -1,4 +1,26 @@
 package com.example.superheroes
 
-class HeroesScreen {
+
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.example.superheroes.model.Hero
+
+
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+fun SpiderList(
+    heroes: List<Hero>,
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
+) {
+    val muestraHeroe = remember {
+        MutableTransitionState(false).apply {
+            targetState = true
+        }
+    }
 }
