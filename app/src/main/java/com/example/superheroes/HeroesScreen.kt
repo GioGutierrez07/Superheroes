@@ -2,6 +2,7 @@ package com.example.superheroes
 
 
 
+import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.MutableTransitionState
@@ -28,6 +29,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -37,8 +39,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.superheroes.model.Hero
+import com.example.superheroes.model.HeroesRepository
+import com.example.superheroes.ui.theme.SuperheroesTheme
+
 
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -124,3 +130,28 @@ fun HeroListItem(
         }
     }
 }
+@Preview("Light Theme")
+@Preview("Dark Theme", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun HeroPreview() {
+    val avenger = Hero(
+        R.string.hero1,
+        R.string.description1,
+        R.drawable.android_superhero1
+    )
+    SuperheroesTheme {
+        HeroListItem(hero = avenger)
+    }
+}
+@Preview("Heroes unidos")
+@Composable
+fun HeroesPreview() {
+    SuperheroesTheme(darkTheme = false) {
+        Surface (
+            color = MaterialTheme.colorScheme.background
+        ) {
+            SpiderList(heroes = HeroesRepository.heroes)
+        }
+    }
+}
+
