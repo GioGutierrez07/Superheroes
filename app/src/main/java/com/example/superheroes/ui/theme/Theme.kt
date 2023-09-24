@@ -2,6 +2,7 @@ package com.example.superheroes.ui.theme
 
 import android.app.Activity
 import android.os.Build
+import android.view.View
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -10,6 +11,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -82,8 +84,6 @@ private val DarkColors = darkColorScheme(
 @Composable
 fun SuperheroesTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    // Dynamic color in this app is turned off for learning purposes
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
@@ -99,9 +99,7 @@ fun SuperheroesTheme(
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
-            val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.background.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+            lados(view,darkTheme)
         }
     }
 
@@ -111,4 +109,21 @@ fun SuperheroesTheme(
         shapes = Shapes,
         content = content
     )
+}
+
+private fun lados(view:View, darkTheme: Boolean){
+    val tema = (view.context as Activity).window
+    WindowCompat.setDecorFitsSystemWindows(tema,false)
+    tema.statusBarColor = Color.Transparent.toArgb()
+
+    val tema2  = when {
+        Build.VERSION.SDK_INT >=29 -> Color.Transparent.toArgb()
+        Build.VERSION.SDK_INT >=26 -> Color(0XFF,0XFF,
+            0XFF,0X63).toArgb()
+        else -> Color(0X00,0X00,0X00,0X50).toArgb()
+    }
+    tema.navigationBarColor = tema2
+    val control = WindowCompat.getInsetsController(tema, view)
+    control.isAppearanceLightStatusBars = !darkTheme
+    control.isAppearanceLightNavigationBars = !darkTheme
 }

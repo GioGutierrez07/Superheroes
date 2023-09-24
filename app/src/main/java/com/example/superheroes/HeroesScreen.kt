@@ -44,9 +44,6 @@ import androidx.compose.ui.unit.dp
 import com.example.superheroes.model.Hero
 import com.example.superheroes.model.HeroesRepository
 import com.example.superheroes.ui.theme.SuperheroesTheme
-
-
-
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun SpiderList(
